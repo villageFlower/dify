@@ -406,6 +406,8 @@ services:
     depends_on:
       - db
       - redis
+      db:
+        condition: service_healthy
     volumes:
       # Mount the storage directory to the container, for storing user files.
       - ./volumes/app/storage:/app/api/storage
@@ -468,10 +470,10 @@ services:
     volumes:
       - ./volumes/db/data:/var/lib/postgresql/data
     healthcheck:
-      test: [ 'CMD', 'pg_isready' ]
-      interval: 1s
-      timeout: 3s
-      retries: 30
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   # The redis cache.
   redis:
