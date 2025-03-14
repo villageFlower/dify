@@ -586,6 +586,8 @@ services:
     depends_on:
       - api
       - web
+    networks:
+      - default
 
   # The TiDB vector store.
   # For production use, please refer to https://github.com/pingcap/tidb-docker-compose
