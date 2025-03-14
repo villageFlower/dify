@@ -404,10 +404,10 @@ services:
       SENTRY_TRACES_SAMPLE_RATE: ${API_SENTRY_TRACES_SAMPLE_RATE:-1.0}
       SENTRY_PROFILES_SAMPLE_RATE: ${API_SENTRY_PROFILES_SAMPLE_RATE:-1.0}
     depends_on:
-      - db
-      - redis
       db:
         condition: service_healthy
+      redis:
+        condition: service_started
     volumes:
       # Mount the storage directory to the container, for storing user files.
       - ./volumes/app/storage:/app/api/storage
@@ -429,8 +429,9 @@ services:
       SENTRY_TRACES_SAMPLE_RATE: ${API_SENTRY_TRACES_SAMPLE_RATE:-1.0}
       SENTRY_PROFILES_SAMPLE_RATE: ${API_SENTRY_PROFILES_SAMPLE_RATE:-1.0}
     depends_on:
-      - db
       - redis
+      db:
+        condition: service_healthy
     volumes:
       # Mount the storage directory to the container, for storing user files.
       - ./volumes/app/storage:/app/api/storage
